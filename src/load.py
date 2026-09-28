@@ -235,7 +235,7 @@ def guardar_resumen(resumen, carpeta=None, nombre=None):
     las tildes se guarden bien, e indent=2 para que sea legible.
     """
     carpeta = carpeta or config.DIR_PROCESSED
-    nombre = nombre or config.ARCHIVO_RESUMEN_JSON
+    nombre = nombre or config.ARCHIVO_SALIDA_JSON
 
     os.makedirs(carpeta, exist_ok=True)
 
@@ -262,9 +262,31 @@ def escribir_log_corrida(resumen, carpeta=None, nombre=None):
 
         2026-08-02 14:30 | OK | 1408 filas | 1993-2024
     """
-    # TODO 12b ------------------------------------------------------------
-    raise NotImplementedError("TODO 12b: implementá escribir_log_corrida()")
-    # ---------------------------------------------------------------------
+    carpeta = carpeta or config.DIR_LOGS
+    nombre = nombre or config.ARCHIVO_LOG
+
+    os.makedirs(carpeta, exist_ok=True)
+
+    ruta = os.path.join(carpeta, nombre)
+
+    ahora = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    desde = resumen["periodo"]["desde"]
+    hasta = resumen["periodo"]["hasta"]
+    cantidad_filas = resumen["filas"]
+
+    linea = (
+        f"{ahora} | OK | "
+        f"{cantidad_filas} filas | "
+        f"{desde}-{hasta}\n"
+    )
+
+    with open(ruta, "a", encoding="utf-8") as f:
+        f.write(linea)
+
+    logging.info("  LOG: %s", ruta)
+
+    return ruta
 
 
 def cargar(filas):
