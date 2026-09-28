@@ -153,13 +153,14 @@ class TestPropios(unittest.TestCase):
     - ¿calcular_decada() funciona con un año de otra década, como 2010?
     """
 
-    @unittest.skip("TODO 13: quitá este skip y escribí el test")
-    def test_lista_vacia(self):
-        self.fail("Escribí este test")
-
-    @unittest.skip("TODO 13: quitá este skip y escribí el test")
     def test_a_eleccion(self):
-        self.fail("Escribí este test")
+        """Prueba que una fecha se convierta correctamente en década."""
+        self.assertEqual(transform.calcular_decada(2024), "2020s")
+
+    def test_lista_vacia(self):
+        """Prueba que una lista vacía no genere filas."""
+        resultado = transform.ancho_a_largo([])
+        self.assertEqual(resultado, [])
 
 
 if __name__ == "__main__":
