@@ -234,10 +234,24 @@ def guardar_resumen(resumen, carpeta=None, nombre=None):
     Acordate de los dos argumentos que vimos: ensure_ascii=False para que
     las tildes se guarden bien, e indent=2 para que sea legible.
     """
-    # TODO 12a ------------------------------------------------------------
-    # Muy parecido a guardar_csv(), pero con json.dump().
-    raise NotImplementedError("TODO 12a: implementá guardar_resumen()")
-    # ---------------------------------------------------------------------
+    carpeta = carpeta or config.DIR_PROCESSED
+    nombre = nombre or config.ARCHIVO_RESUMEN_JSON
+
+    os.makedirs(carpeta, exist_ok=True)
+
+    ruta = os.path.join(carpeta, nombre)
+
+    with open(ruta, "w", encoding="utf-8") as f:
+        json.dump(
+            resumen,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
+
+    logging.info("  JSON: %s", ruta)
+
+    return ruta
 
 
 def escribir_log_corrida(resumen, carpeta=None, nombre=None):
