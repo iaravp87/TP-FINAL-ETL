@@ -59,12 +59,21 @@ def chequear_unicidad(filas):
 
     Debe devolver (bool, mensaje), igual que los checks de arriba.
     """
-    # TODO 9 --------------------------------------------------------------
-    # Pista: es el patrón del set que viste en la Clase 3. Armá la lista de
-    # claves (una tupla por fila) y compará len(lista) con len(set(lista)).
-    raise NotImplementedError("TODO 9: implementá chequear_unicidad()")
-    # ---------------------------------------------------------------------
+    claves = [
+        (
+            fila["provincia"],
+            fila["anio"],
+            fila["destino"]
+        )
+        for fila in filas
+    ]
 
+    if len(claves) == len(set(claves)):
+        return True, "unicidad: no hay duplicados"
+
+    duplicados = len(claves) - len(set(claves))
+
+    return False, f"unicidad: hay {duplicados} claves duplicadas"  
 
 def chequear_rangos(filas):
     """¿Los valores son plausibles?
