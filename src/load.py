@@ -81,11 +81,25 @@ def chequear_rangos(filas):
     Un valor negativo o mayor a config.VALOR_MAXIMO_RAZONABLE es
     sospechoso: no existen exportaciones negativas.
     """
-    # TODO 10 -------------------------------------------------------------
-    # Pista: una comprensión de lista con la condición al final te da
-    # directamente las filas fuera de rango; después mirás cuántas son.
-    raise NotImplementedError("TODO 10: implementá chequear_rangos()")
-    # ---------------------------------------------------------------------
+    fuera_de_rango = [
+        fila
+        for fila in filas
+        if (
+            fila["valor_musd"] is not None
+            and (
+                fila["valor_musd"] < 0
+                or fila["valor_musd"] > config.VALOR_MAXIMO_RAZONABLE
+            )
+        )
+    ]
+
+    if fuera_de_rango:
+        return (
+            False,
+            f"rangos: {len(fuera_de_rango)} valores fuera de rango"
+        )
+
+    return True, "rangos: todos los valores son plausibles"
 
 
 def chequear_cobertura(filas):
